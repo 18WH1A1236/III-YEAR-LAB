@@ -1,40 +1,54 @@
-#include<stdio.h>
+#include <stdio.h>
 
-int main(){
-
-int frame,i,d = 0;
-
-printf("enter frame length: ");
-scanf("%d",&frame);
-
-char data[30];
-printf("enter frame : ");
-scanf("%s",data);
-
-printf("\noriginal data : \n");
-printf("%s\n",data);
-
-printf("\n\nafter character stuffing : dlestx ");
-for(i=0;i<frame;i++){
-  printf("%c",data[i]);
-  if(data[i] == 'd'){
-    d++;
-  }
-  else if(data[i] == 'l' && d == 1){
-    d++;
-  }
-  else if(data[i] == 'e' && d==2){
-    printf("dle");
-    d = 0;
-  }
-  else{
-   d = 0;
-  }
-}
-printf(" dleetx\n\n");
-
-printf("Recived data after destuffing : ");
-printf("%s\n",data);
-
-return 0;
+int main()
+{
+    int n,count=0;
+    printf("enter the no of frame: ");
+    scanf("%d",&n);
+    int databits[50],i,j=0,stuffdata[50];
+    printf("Enter the databits: \n");
+    for(i=0;i<n;i++){
+        scanf("%d",&databits[i]);
+    }
+    for(i=0;i<n;i++){
+        if(databits[i] == 1){
+            count++;
+        }else{
+            count =0;
+        }
+        stuffdata[j] = bits[i];
+        j++;
+        if(count==5 && i!=n-1){
+            count=0;
+            stuffdata[j]=0;
+            j++;
+        }
+    }
+    printf("\nat sender\n");
+    printf("\nafter bit stuffing:01111110 ");
+    for(i=0;i<j;i++){
+        printf("%d",stuffdata[i]);
+    }
+    printf("01111110 ");
+    printf("\nat reciver");
+    printf("\nData recived is:01111110 ");
+    for(i=0;i<j;i++){
+        printf("%d",stuffdata[i]);
+    }
+    printf("01111110 ");
+    printf("\nAfter de-stuffing:");
+    count=0;
+    for(i=0;i<j;i++){
+        if(stuffdata[i] == 1){
+            count++;
+        }else{
+            count = 0;
+        }
+        printf("%d",stuffdata[i]);
+        if(count == 5){
+            i++;
+        }
+    }
+    printf("\n");
+    return 0;
 }
